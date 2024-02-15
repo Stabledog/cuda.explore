@@ -14,7 +14,8 @@ Config: $(Flag)/.init
 	absdir=$(absdir)
 	Flag=$(Flag)
 	Flags="$(shell cd $(Flag); ls)"
-	MainUrl="https://docs.nvidia.com/cuda/wsl-user-guide/index.html"
+	CudaUrl="https://docs.nvidia.com/cuda/"
+	CudaWslUrl="https://docs.nvidia.com/cuda/wsl-user-guide/index.html"
 	EOF
 
 $(Flag)/.init:
