@@ -26,6 +26,9 @@ $(Flag)/windows-driver:
 	cat <<-EOF
 	Have you already installed the appropriate Windows NVIDIA driver for the host OS?
 	If not, see https://docs.nvidia.com/cuda/wsl-user-guide/index.html and do that.
+
+	WARNING: do not install any *LINUX* GPU driver.  (WSL borrows the Windows driver.)
+
 	EOF
 	read -p "Enter 'yes' to update the flag for this task when complete: "
 	case $$REPLY in
