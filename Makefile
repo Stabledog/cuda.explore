@@ -14,11 +14,25 @@ Config: $(Flag)/.init
 	absdir=$(absdir)
 	Flag=$(Flag)
 	Flags="$(shell cd $(Flag); ls)"
+	MainUrl="https://docs.nvidia.com/cuda/wsl-user-guide/index.html"
 	EOF
 
 $(Flag)/.init:
 	@mkdir -p $(Flag)
 	touch $@
+
+$(Flag)/windows-driver:
+	@
+	cat <<-EOF
+	Have you already installed the appropriate Windows NVIDIA driver for the host OS?
+	If not, see https://docs.nvidia.com/cuda/wsl-user-guide/index.html and do that.
+	EOF
+	read -p "Enter 'yes' to update the flag for this task when complete: "
+	case $$REPLY in
+		YES|yes) touch $@; exit;;
+		*) echo "Exiting with fail." ; exit 19;;
+	esac
+
 
 $(Flag)/cuda-toolkit-dpkg:
 	@ # See https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_network
@@ -34,5 +48,5 @@ $(Flag)/cuda-toolkit-dpkg:
 	touch $@
 
 setup: $(Flag)/setup
-$(Flag)/setup: $(Flag)/cuda-toolkit-dpkg
+$(Flag)/setup: $(Flag)/windows-driver $(Flag)/cuda-toolkit-dpkg
 	touch $@
