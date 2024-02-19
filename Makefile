@@ -65,8 +65,17 @@ $(Flag)/cuda.bashrc:
 	echo 'source $@' >> $(HOME)/.bashrc
 	mv $@.tmp $@
 
+.PHONY: .gpu-debugger-enabled
+.gpu-debugger-enabled:
+	set -x
+	powershell.exe -Command "Get-ItemProperty -Path  'HKLM:\SOFTWARE\NVIDIA Corporation\GPUDebugger\'  -Name EnableInterface | Select-Object -ExpandProperty EnableInterface" || {
+		echo "ERROR: GPUDebugger is not enabled in the Windows registry. Set HKLM:/SOFTWARE/NVIDIA Corporation/GPUDebugger/EnableInterface to 0x00000001 and try again."
+		exit 19
+	}
+
+
 
 setup: $(Flag)/setup
-$(Flag)/setup: $(Flag)/windows-driver $(Flag)/cuda-toolkit-dpkg $(Flag)/cuda.bashrc
+$(Flag)/setup: $(Flag)/windows-driver $(Flag)/cuda-toolkit-dpkg $(Flag)/cuda.bashrc .gpu-debugger-enabled
 	touch $@
 
