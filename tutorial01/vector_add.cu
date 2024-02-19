@@ -18,5 +18,8 @@ int main() {
         a[i] = 1.0f; b[i] = 2.0f;
     }
     vector_add<<<1,1>>>(out,a,b,N);
+    for (int i = 10; i < 20; ++i) {
+        printf("%f\n", out[i]);
+    }
     return 0;
 }
