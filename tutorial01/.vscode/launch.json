@@ -5,8 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "vector_add_cu (vsce)",
+            "type": "cuda-gdb",
+            "request": "launch",
+            "program": "${workspaceFolder}/out/vector_add_cu",
+        },
+        {
             "name": "vector_add_cu",
-            "type": "cppdbg",
+            "type": "cuda-gdb",
             "request": "launch",
             "program": "${workspaceFolder}/out/vector_add_cu",
             "args": [],
