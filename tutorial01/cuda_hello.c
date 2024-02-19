@@ -1,12 +1,23 @@
 // cuda_hello.c
 
-#include <stdio.h>
 
-__global__ void cuda_hello() {
-    printf("Hello world from CUDA");
+#include <stdio.h>
+#include <cstdlib>
+#define N 10000000
+
+void vector_add(float *out, float *a, float *b, int n) {
+    for (int i = 0; i < n; i++) {
+        out[i] = a[i] + b[i];
+    }
 }
 
-int main(int, char* argc[]) {
-    cuda_hello<<<1,1>>>();
+int main() {
+    float *a = (float*)malloc(sizeof(float) * N);
+    float *b = (float*)malloc(sizeof(float) * N);
+    float *out = (float*)malloc(sizeof(float) * N);
+    for (int i = 0; i < N; ++i) {
+        a[i] = 1.0f; b[i] = 2.0f;
+    }
+    vector_add(out,a,b,N);
     return 0;
 }
