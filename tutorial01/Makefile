@@ -9,15 +9,22 @@ absdir := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
 # Should be in /usr/local/cuda/bin:
 Nvcc = $(CUDA_HOME)/bin/nvcc
+CudaGdb = $(CUDA_HOME)/bin/cuda-gdb
 
-out/cuda_hello_c: cuda_hello.c
-	g++ -o $@ $<
+out/vector_add_c: vector_add.c
+	g++ -g -o $@ $<
 
-out/cuda_hello_cu: cuda_hello.cu
-	$(Nvcc) -o $@ $<
+out/vector_add_cu: vector_add.cu
+	$(Nvcc) -g -G -o $@ $<
 
 out/.init:
 	mkdir -p $@
 
 .PHONY: build
-build: out/.init out/cuda_hello_c out/cuda_hello_cu
+build: out/.init out/vector_add_c out/vector_add_cu
+
+debug:
+	@$(CudaGdb) --args out/vector_add_cu
+
+clean:
+	@rm -rf out || :

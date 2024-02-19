@@ -2,6 +2,7 @@
 
 
 #include <stdio.h>
+#include <cstdlib>
 #define N 10000000
 
 void vector_add(float *out, float *a, float *b, int n) {
@@ -9,6 +10,7 @@ void vector_add(float *out, float *a, float *b, int n) {
         out[i] = a[i] + b[i];
     }
 }
+
 
 int main() {
     float *a = (float*)malloc(sizeof(float) * N);
